@@ -24,10 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
-    ;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http.addFilterBefore(restHeaderAuthFilter(authenticationManager()),
                 UsernamePasswordAuthenticationFilter.class);
         http

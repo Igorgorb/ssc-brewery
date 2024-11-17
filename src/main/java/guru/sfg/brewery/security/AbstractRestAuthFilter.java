@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-public abstract class AbstractRestHeaderAuthFilter extends AbstractAuthenticationProcessingFilter {
-    public AbstractRestHeaderAuthFilter(RequestMatcher requiresAuthenticationRequestMatcher) {
+public abstract class AbstractRestAuthFilter extends AbstractAuthenticationProcessingFilter {
+    public AbstractRestAuthFilter(RequestMatcher requiresAuthenticationRequestMatcher) {
         super(requiresAuthenticationRequestMatcher);
     }
 

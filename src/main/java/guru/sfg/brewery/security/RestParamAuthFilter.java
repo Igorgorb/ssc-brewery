@@ -6,7 +6,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
-public class RestParamAuthFilter extends AbstractRestHeaderAuthFilter {
+public class RestParamAuthFilter extends AbstractRestAuthFilter {
     public RestParamAuthFilter(RequestMatcher requiresAuthenticationRequestMatcher) {
         super(requiresAuthenticationRequestMatcher);
     }

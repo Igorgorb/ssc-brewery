@@ -68,7 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles("USER")
                 .and()
                 .withUser("scott")
-                .password("{bcrypt15}$2a$15$Q2c.D6CwPcr3TS8nbBBOcex1S1ogKXNMRpNQuQfmBJkxdLJsKTwGa")
+                .password("{bcrypt10}$2a$10$bsX5g5uXnnC3hfS1vaifxOSgKUP5z7tHjX.y58rmNMuDEpgHz8DNG")
+//                .password("{bcrypt15}$2a$15$Q2c.D6CwPcr3TS8nbBBOcex1S1ogKXNMRpNQuQfmBJkxdLJsKTwGa")
 //                .password("{ldap}{SSHA}gffdgLmjq4JH8dyryzpw74xQusvR+9gwZ/6TSw==")
 //                .password("tiger")
                 .roles("CUSTOMER");

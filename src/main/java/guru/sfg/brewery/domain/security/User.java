@@ -3,6 +3,7 @@ package guru.sfg.brewery.domain.security;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -25,7 +26,7 @@ public class User {
     @JoinTable(name = "user_authority",
     joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
     inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
-    private Set<Authority> authorities;
+    private Set<Authority> authorities = new HashSet<>();
 
 
     @Builder.Default

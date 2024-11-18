@@ -20,6 +20,7 @@ import guru.sfg.brewery.domain.*;
 import guru.sfg.brewery.repositories.*;
 import guru.sfg.brewery.web.model.BeerStyleEnum;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,7 @@ import java.util.UUID;
 /**
  * Created by jt on 2019-01-26.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class DefaultBreweryLoader implements CommandLineRunner {

@@ -3,6 +3,7 @@ package guru.sfg.brewery.domain.security;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -20,5 +21,5 @@ public class Authority {
     private String role;
 
     @ManyToMany(mappedBy = "authorities")
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 }

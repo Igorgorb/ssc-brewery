@@ -39,7 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(restParamAuthFilter(authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class);
         http
-                .authorizeRequests(authorize -> authorize.antMatchers("/",
+                .authorizeRequests(authorize -> authorize
+                        .antMatchers("/h2-console/**").permitAll() // do not use in production
+                        .antMatchers("/",
                                 "/webjars/**",
                                 "/login",
                                 "/resources/**",
@@ -53,6 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().and()
                 .httpBasic();
+
+        // h2 console config
+        http.headers().frameOptions().sameOrigin();
     }
 
     @Bean

@@ -12,10 +12,10 @@ public class RestParamAuthFilter extends AbstractRestAuthFilter {
     }
 
     protected String getUserName(HttpServletRequest request) {
-        return request.getParameter("Api-Key");
+        return request.getParameter("apiKey");
     }
 
     protected String getPassword(HttpServletRequest request) {
-        return request.getParameter("Api-Secret");
+        return request.getParameter("apiSecret");
     }
 }

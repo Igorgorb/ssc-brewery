@@ -11,8 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
@@ -25,6 +27,7 @@ public class UserDataLoader implements CommandLineRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
     public void run(String... args) throws Exception {
         if (userRepository.count() == 0) {
@@ -55,13 +58,13 @@ public class UserDataLoader implements CommandLineRunner {
         Role customerRole = roleRepository.save(Role.builder().name("CUSTOMER").build());
         Role userRole = roleRepository.save(Role.builder().name("USER").build());
 
-        adminRole.setAuthorities(Set.of(createBeer, updateBeer, readBeer, deleteBeer,
+        adminRole.setAuthorities(new HashSet<>(Set.of(createBeer, updateBeer, readBeer, deleteBeer,
                 createBrewery, updateBrewery, readBrewery, deleteBrewery,
-                createCustomer, updateCustomer, readCustomer, deleteCustomer));
+                createCustomer, updateCustomer, readCustomer, deleteCustomer)));
 
-        customerRole.setAuthorities(Set.of(readBeer,readBrewery,readCustomer));
+        customerRole.setAuthorities(new HashSet<>(Set.of(readBeer,readBrewery,readCustomer)));
 
-        userRole.setAuthorities(Set.of(readBeer));
+        userRole.setAuthorities(new HashSet<>(Set.of(readBeer)));
 
         roleRepository.saveAll(Arrays.asList(adminRole, customerRole, userRole));
 

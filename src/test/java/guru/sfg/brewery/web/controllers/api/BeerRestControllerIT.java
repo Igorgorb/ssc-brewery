@@ -61,25 +61,20 @@ public class BeerRestControllerIT extends BaseIT {
                     .andExpect(status().isOk());
         }
 
+
+        @ParameterizedTest(name = "#{index} with [{arguments}]")
+        @MethodSource("guru.sfg.brewery.web.controllers.BeerControllerIT#getStreamWithoutAdmin")
+        void deleteBeerHttpBasicNotAuth(String user, String pwd) throws Exception {
+            mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
+                            .with(httpBasic(user, pwd)))
+                    .andExpect(status().isForbidden());
+        }
+
         @Test
-        void deleteBeerHttpBasic() throws Exception {
+        void deleteBeerHttpBasicAdminRole() throws Exception {
             mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
                             .with(httpBasic("spring", "guru")))
                     .andExpect(status().is2xxSuccessful());
-        }
-
-        @Test
-        void deleteBeerHttpBasicUserRole() throws Exception {
-            mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
-                            .with(httpBasic("user", "password")))
-                    .andExpect(status().isForbidden());
-        }
-
-        @Test
-        void deleteBeerHttpBasicCustomerRole() throws Exception {
-            mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
-                            .with(httpBasic("scott", "tiger")))
-                    .andExpect(status().isForbidden());
         }
 
         @Test

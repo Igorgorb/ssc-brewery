@@ -25,13 +25,19 @@ public class BeerControllerIT extends BaseIT {
     @Nested
     class InitNewForm {
 
-        @ParameterizedTest(name = "#{index} with [{arguments}]")
-        @MethodSource("guru.sfg.brewery.web.controllers.BeerControllerIT#getStreamAllUsers")
-        public void initCreationFormAuth(String user, String pwd) throws Exception {
-            mockMvc.perform(get("/beers/new").with(httpBasic(user, pwd)))
+        @Test
+        public void initCreationFormAuth() throws Exception {
+            mockMvc.perform(get("/beers/new").with(httpBasic("spring", "guru")))
                     .andExpect(status().isOk())
                     .andExpect(view().name("beers/createBeer"))
                     .andExpect(model().attributeExists("beer"));
+        }
+
+        @ParameterizedTest(name = "#{index} with [{arguments}]")
+        @MethodSource("guru.sfg.brewery.web.controllers.BeerControllerIT#getStreamWithoutAdmin")
+        public void initCreationFormNoAuth(String user, String pwd) throws Exception {
+            mockMvc.perform(get("/beers/new").with(httpBasic(user, pwd)))
+                    .andExpect(status().isForbidden());
         }
 
         @Test
@@ -85,7 +91,7 @@ public class BeerControllerIT extends BaseIT {
     class GetByID {
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("guru.sfg.brewery.web.controllers.BeerControllerIT#getStreamAllUsers")
-        void getBeerByIdAUTH(String user, String pwd) throws Exception{
+        void getBeerByIdAUTH(String user, String pwd) throws Exception {
             Beer beer = beerRepository.findAll().get(0);
 
             mockMvc.perform(get("/beers/" + beer.getId())
@@ -96,7 +102,7 @@ public class BeerControllerIT extends BaseIT {
         }
 
         @Test
-        void getBeerByIdNoAuth() throws Exception{
+        void getBeerByIdNoAuth() throws Exception {
             Beer beer = beerRepository.findAll().get(0);
 
             mockMvc.perform(get("/beers/" + beer.getId()))

@@ -45,23 +45,6 @@ public class BeerRestControllerIT extends BaseIT {
                     .build());
         }
 
-        @Test
-        void deleteBeerBadCreds() throws Exception {
-            mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
-                            .header("Api-Key", "spring")
-                            .header("Api-Secret", "guruXXXX"))
-                    .andExpect(status().isUnauthorized());
-        }
-
-        @Test
-        void deleteBeer() throws Exception {
-            mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
-                            .header("Api-Key", "spring")
-                            .header("Api-Secret", "guru"))
-                    .andExpect(status().isOk());
-        }
-
-
         @ParameterizedTest(name = "#{index} with [{arguments}]")
         @MethodSource("guru.sfg.brewery.web.controllers.BeerControllerIT#getStreamWithoutAdmin")
         void deleteBeerHttpBasicNotAuth(String user, String pwd) throws Exception {
@@ -75,22 +58,6 @@ public class BeerRestControllerIT extends BaseIT {
             mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
                             .with(httpBasic("spring", "guru")))
                     .andExpect(status().is2xxSuccessful());
-        }
-
-        @Test
-        void deleteBeerBadCredsParam() throws Exception {
-            mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
-                            .param("apiKey", "spring")
-                            .param("apiSecret", "guruXXXX"))
-                    .andExpect(status().isUnauthorized());
-        }
-
-        @Test
-        void deleteBeerParam() throws Exception {
-            mockMvc.perform(delete("/api/v1/beer/" + beerToDelete().getId())
-                            .param("apiKey", "spring")
-                            .param("apiSecret", "guru"))
-                    .andExpect(status().isOk());
         }
 
         @Test

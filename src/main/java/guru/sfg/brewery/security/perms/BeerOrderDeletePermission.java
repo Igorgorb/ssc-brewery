@@ -6,6 +6,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasAuthority('order.delete') or hasAuthority('customer.order.delete')")
+@PreAuthorize("hasAuthority('order.delete') or hasAuthority('customer.order.delete')" +
+        " AND @beerOrderAuthenticationManager.customerIdMatches(authentication, #customerId)")
 public @interface BeerOrderDeletePermission {
 }

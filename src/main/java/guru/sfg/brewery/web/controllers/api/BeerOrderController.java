@@ -27,9 +27,6 @@ public class BeerOrderController {
         this.beerOrderService = beerOrderService;
     }
 
-    //    @PreAuthorize("hasAuthority('order.read') or " +
-//            "hasAuthority('customer.order.read') " +
-//            " and @beerOrderAuthenticationManager.customerIdMatches(authentication, #customerId)")
     @BeerOrderReadPermission
     @GetMapping("orders")
     public BeerOrderPagedList listOrders(@PathVariable("customerId") UUID customerId,

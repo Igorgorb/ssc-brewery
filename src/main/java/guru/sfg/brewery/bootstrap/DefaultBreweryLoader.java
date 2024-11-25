@@ -115,7 +115,7 @@ public class DefaultBreweryLoader implements CommandLineRunner {
         createOrder(dunedinCustomer);
         createOrder(keyWestCustomer);
 
-        log.debug("Orders Loaded: " + beerOrderRepository.count());
+        log.debug("Orders Loaded: {}", beerOrderRepository.count());
     }
 
     private BeerOrder createOrder(Customer customer) {
@@ -264,6 +264,6 @@ public class DefaultBreweryLoader implements CommandLineRunner {
                 .role(customerRole)
                 .build());
 
-        log.debug("Users Loaded: " + userRepository.count());
+        log.debug("Users Loaded: {}", userRepository.count());
     }
 }

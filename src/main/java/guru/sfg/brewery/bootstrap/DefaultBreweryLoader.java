@@ -95,17 +95,17 @@ public class DefaultBreweryLoader implements CommandLineRunner {
                 .build());
 
         //create users
-        User stPeteUser = userRepository.save(User.builder().username("stpete")
+        User stPeteUser = userRepository.save(User.builder().username(STPETE_USER)
                 .password(passwordEncoder.encode("password"))
                 .customer(stPeteCustomer)
                 .role(customerRole).build());
 
-        User dunedinUser = userRepository.save(User.builder().username("dunedin")
+        User dunedinUser = userRepository.save(User.builder().username(DUNEDIN_USER)
                 .password(passwordEncoder.encode("password"))
                 .customer(dunedinCustomer)
                 .role(customerRole).build());
 
-        User keywest = userRepository.save(User.builder().username("keywest")
+        User keywest = userRepository.save(User.builder().username(KEYWEST_USER)
                 .password(passwordEncoder.encode("password"))
                 .customer(keyWestCustomer)
                 .role(customerRole).build());
@@ -119,7 +119,7 @@ public class DefaultBreweryLoader implements CommandLineRunner {
     }
 
     private BeerOrder createOrder(Customer customer) {
-        return beerOrderRepository.save(BeerOrder.builder()
+        return  beerOrderRepository.save(BeerOrder.builder()
                 .customer(customer)
                 .orderStatus(OrderStatusEnum.NEW)
                 .beerOrderLines(Set.of(BeerOrderLine.builder()
@@ -128,6 +128,7 @@ public class DefaultBreweryLoader implements CommandLineRunner {
                         .build()))
                 .build());
     }
+
 
     private void loadTastingRoomData() {
         Customer tastingRoom = Customer.builder()
@@ -202,47 +203,46 @@ public class DefaultBreweryLoader implements CommandLineRunner {
     }
 
     private void loadSecurityData() {
-        // beer auths
+        //beer auths
         Authority createBeer = authorityRepository.save(Authority.builder().permission("beer.create").build());
-        Authority updateBeer = authorityRepository.save(Authority.builder().permission("beer.update").build());
         Authority readBeer = authorityRepository.save(Authority.builder().permission("beer.read").build());
+        Authority updateBeer = authorityRepository.save(Authority.builder().permission("beer.update").build());
         Authority deleteBeer = authorityRepository.save(Authority.builder().permission("beer.delete").build());
 
-        // brewery auths
-        Authority createBrewery = authorityRepository.save(Authority.builder().permission("brewery.create").build());
-        Authority updateBrewery = authorityRepository.save(Authority.builder().permission("brewery.update").build());
-        Authority readBrewery = authorityRepository.save(Authority.builder().permission("brewery.read").build());
-        Authority deleteBrewery = authorityRepository.save(Authority.builder().permission("brewery.delete").build());
-
-        // Customer auths
+        //customer auths
         Authority createCustomer = authorityRepository.save(Authority.builder().permission("customer.create").build());
-        Authority updateCustomer = authorityRepository.save(Authority.builder().permission("customer.update").build());
         Authority readCustomer = authorityRepository.save(Authority.builder().permission("customer.read").build());
+        Authority updateCustomer = authorityRepository.save(Authority.builder().permission("customer.update").build());
         Authority deleteCustomer = authorityRepository.save(Authority.builder().permission("customer.delete").build());
 
-        // Beer order
+        //customer brewery
+        Authority createBrewery = authorityRepository.save(Authority.builder().permission("brewery.create").build());
+        Authority readBrewery = authorityRepository.save(Authority.builder().permission("brewery.read").build());
+        Authority updateBrewery = authorityRepository.save(Authority.builder().permission("brewery.update").build());
+        Authority deleteBrewery = authorityRepository.save(Authority.builder().permission("brewery.delete").build());
+
+        //beer order
         Authority createOrder = authorityRepository.save(Authority.builder().permission("order.create").build());
-        Authority updateOrder = authorityRepository.save(Authority.builder().permission("order.update").build());
         Authority readOrder = authorityRepository.save(Authority.builder().permission("order.read").build());
+        Authority updateOrder = authorityRepository.save(Authority.builder().permission("order.update").build());
         Authority deleteOrder = authorityRepository.save(Authority.builder().permission("order.delete").build());
         Authority createOrderCustomer = authorityRepository.save(Authority.builder().permission("customer.order.create").build());
-        Authority updateOrderCustomer = authorityRepository.save(Authority.builder().permission("customer.order.update").build());
         Authority readOrderCustomer = authorityRepository.save(Authority.builder().permission("customer.order.read").build());
+        Authority updateOrderCustomer = authorityRepository.save(Authority.builder().permission("customer.order.update").build());
         Authority deleteOrderCustomer = authorityRepository.save(Authority.builder().permission("customer.order.delete").build());
 
         Role adminRole = roleRepository.save(Role.builder().name("ADMIN").build());
         Role customerRole = roleRepository.save(Role.builder().name("CUSTOMER").build());
         Role userRole = roleRepository.save(Role.builder().name("USER").build());
 
-        adminRole.setAuthorities(new HashSet<>(Set.of(createBeer, updateBeer, readBeer, deleteBeer,
-                createBrewery, updateBrewery, readBrewery, deleteBrewery,
-                createCustomer, updateCustomer, readCustomer, deleteCustomer,
-                createOrder, updateOrder, readOrder, deleteOrder)));
+        adminRole.setAuthorities(new HashSet<>(Set.of(createBeer, updateBeer, readBeer, deleteBeer, createCustomer, readCustomer,
+                updateCustomer, deleteCustomer, createBrewery, readBrewery, updateBrewery, deleteBrewery,
+                createOrder, readOrder, updateOrder, deleteOrder)));
 
-        customerRole.setAuthorities(new HashSet<>(Set.of(readBeer, readBrewery, readCustomer,
-                createOrderCustomer, updateOrderCustomer, readOrderCustomer, deleteOrderCustomer)));
+        customerRole.setAuthorities(new HashSet<>(Set.of(readBeer, readCustomer, readBrewery, createOrderCustomer, readOrderCustomer,
+                updateOrderCustomer, deleteOrderCustomer)));
 
-        userRole.setAuthorities(new HashSet<>(Set.of(readBeer, readOrder)));
+        userRole.setAuthorities(new HashSet<>(Set.of(readBeer)));
 
         roleRepository.saveAll(Arrays.asList(adminRole, customerRole, userRole));
 

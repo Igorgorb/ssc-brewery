@@ -14,7 +14,12 @@ public class BeerOrderAuthenticationManager {
     public boolean customerIdMatches(Authentication authentication, UUID customerId) {
         User authenticatedUser = (User) authentication.getPrincipal();
 
-        log.debug("Auth user Customer Id: " + authenticatedUser.getCustomer().getId() + " Customer Id: " + customerId);
+//        if (Objects.isNull(authenticatedUser)
+//                || Objects.isNull(authenticatedUser.getCustomer())) {
+//            log.debug("Auth user Customer Id: isNull Customer Id: {}", customerId);
+//            return false;
+//        }
+        log.debug("Auth user Customer Id: {} Customer Id: {}", authenticatedUser.getCustomer().getId(), customerId);
 
         return authenticatedUser.getCustomer().getId().equals(customerId);
     }

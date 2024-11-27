@@ -224,26 +224,6 @@ class BeerOrderControllerTest extends BaseIT {
                 .andExpect(status().isForbidden());
     }
 
-    @Disabled
-    @Test
-    void pickUpOrderNotAuth() {
-    }
-
-    @Disabled
-    @Test
-    void pickUpOrderNotAdminUser() {
-    }
-
-    @Disabled
-    @Test
-    void pickUpOrderCustomerUserAUTH() {
-    }
-
-    @Disabled
-    @Test
-    void pickUpOrderCustomerUserNOT_AUTH() {
-    }
-
     private BeerOrderDto buildOrderDto(Customer customer, UUID beerId) {
         List<BeerOrderLineDto> orderLines = Arrays.asList(BeerOrderLineDto.builder()
                 .id(UUID.randomUUID())

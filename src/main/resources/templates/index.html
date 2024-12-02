@@ -33,10 +33,12 @@
         <div th:if="${param.logout}" class="alert alert-success">You Have Logged Out</div>
         <form th:action="@{/login}" method="post">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" autofocus="autofocus" autocomplete="off">
+            <input type="text" id="username" name="username" autofocus="autofocus" autocomplete="off" />
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" autofocus="autofocus" autocomplete="off">
-            <input type="submit" value="Log In">
+            <input type="password" id="password" name="password" autofocus="autofocus" autocomplete="off" />
+            <input type="submit" value="Log In" />
+            <label for="remember-me">Remember Me:</label>
+            <input type="checkbox" id="remember-me" name="remember-me" />
         </form>
     </div>
 </div>
@@ -44,13 +46,6 @@
     <div class="col-md-12">
         <p th:text="'Welcome: ' + ${#authentication?.principal?.username}">User</p>
         <p><a th:href="@{/logout}">Logout</a> </p>
-<!--        <form th:action="@{/login}" method="post">-->
-<!--            <label for="username">Username:</label>-->
-<!--            <input type="text" id="username" name="username" autofocus="autofocus" autocomplete="off">-->
-<!--            <label for="password">Password:</label>-->
-<!--            <input type="password" id="password" name="password" autofocus="autofocus" autocomplete="off">-->
-<!--            <input type="submit" value="Log In">-->
-<!--        </form>-->
     </div>
 </div>
 <div class="row">

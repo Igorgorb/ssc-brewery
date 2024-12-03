@@ -1,7 +1,6 @@
 package guru.sfg.brewery.security.google;
 
 import guru.sfg.brewery.domain.security.User;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
@@ -20,10 +19,10 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class Google2faFilter extends GenericFilterBean {
 
     private final AuthenticationTrustResolver trustResolver = new AuthenticationTrustResolverImpl();
+    private final Google2faFailureHandler failureHandler = new Google2faFailureHandler();
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -36,13 +35,13 @@ public class Google2faFilter extends GenericFilterBean {
         if (authentication != null && !trustResolver.isAnonymous(authentication)) {
             log.debug("Processing 2FA Filter");
 
-            if(authentication.getPrincipal() != null && authentication.getPrincipal() instanceof User){
+            if (authentication.getPrincipal() != null && authentication.getPrincipal() instanceof User) {
                 User user = (User) authentication.getPrincipal();
 
-                if(user.getUseGoogle2f() && user.getGoogle2FaRequired()) {
+                if (user.getUseGoogle2f() && user.getGoogle2FaRequired()) {
                     log.debug("Using Google 2FA Required");
 
-                    // todo add failure handler
+                    failureHandler.onAuthenticationFailure(request, response, null);
                 }
             }
         }

@@ -29,6 +29,7 @@ public class Google2faFilter extends GenericFilterBean {
     private final Google2faFailureHandler failureHandler = new Google2faFailureHandler();
     private final RequestMatcher urlIs2fa = new AntPathRequestMatcher("/user/verify2fa");
     private final RequestMatcher urlResources = new AntPathRequestMatcher("/resources/**");
+    private final RequestMatcher h2Console = new AntPathRequestMatcher("/h2-console/**");
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -38,7 +39,7 @@ public class Google2faFilter extends GenericFilterBean {
         StaticResourceRequest.StaticResourceRequestMatcher staticResourceRequestMatcher
                 = PathRequest.toStaticResources().atCommonLocations();
 
-        if (urlIs2fa.matches(request) || urlResources.matches(request)
+        if (urlIs2fa.matches(request) || urlResources.matches(request) || h2Console.matches(request)
                 || staticResourceRequestMatcher.matcher(request).isMatch()) {
             filterChain.doFilter(request, response);
             return;
@@ -51,7 +52,7 @@ public class Google2faFilter extends GenericFilterBean {
 
             if (authentication.getPrincipal() != null && authentication.getPrincipal() instanceof User) {
                 User user = (User) authentication.getPrincipal();
-
+                log.debug("User: {}", user.getUsername());
                 if (user.getUseGoogle2f() && user.getGoogle2FaRequired()) {
                     log.debug("Using Google 2FA Required");
 

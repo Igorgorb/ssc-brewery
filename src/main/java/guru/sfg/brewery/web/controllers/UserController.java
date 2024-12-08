@@ -50,6 +50,8 @@ public class UserController {
             return "index";
         } else {
             // bad code
+
+            log.debug("Code is Bad: {}", verifyCode);
             return "user/register2fa";
         }
     }
